@@ -6,7 +6,7 @@ class RanCat:
         self.files = OrderedDict()
 
         from time import time
-        self.seed = time if not seed else seed
+        self.seed = time() if not seed else seed
         random.seed(self.seed)
 
         self._conversion = self._default_conversion

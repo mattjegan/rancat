@@ -47,7 +47,7 @@ class TestRanCat:
         raw_string = 'string'
         correct_string = raw_string.upper()
         r = RanCat()
-        r.set_conversion(str.upper())
+        r.set_conversion(str.upper)
         processed_string = r._conversion(raw_string)
         assert processed_string == correct_string
         
