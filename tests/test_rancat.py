@@ -66,7 +66,7 @@ class TestRanCat:
         datafile = 'examples/data/colors.txt'
         seed_value = 123
         r = RanCat(seed=seed_value)
-        r._unique = True
+        r.set_unique(True)
         r.load(datafile)
         i = []
         for x in r:

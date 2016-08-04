@@ -78,3 +78,6 @@ class RanCat:
             self._conversion = conversion_callable
         else:
             raise TypeError('{} must be callable'.format(str(conversion_callable)))
+
+    def set_unique(self, boolean):
+        self._unique = bool(boolean)
