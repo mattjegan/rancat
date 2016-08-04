@@ -1,7 +1,7 @@
 import random
 
 class RanCat:
-    def __init__(self, seed=None):
+    def __init__(self, seed=None, unique=False):
         from collections import OrderedDict
         self.files = OrderedDict()
 
@@ -10,6 +10,9 @@ class RanCat:
         random.seed(self.seed)
 
         self._conversion = self._default_conversion
+        self._unique = unique
+        self._total_combinations = 0
+        self._seen_map = {}
 
     def __iter__(self):
         return self
@@ -20,18 +23,36 @@ class RanCat:
     def next(self):
         self._open_all()
 
+        if len(self._seen_map.keys()) == self._total_combinations:
+            raise StopIteration('Exhausted combinations')
+
         # Build the string
-        result_string = ''
-        for f in self.files.values():
-            choice = random.choice(f)
-            result_string += self._conversion(choice) + '_'
-        return result_string[:-1]
+        seen = False
+        while not seen:
+            result_string = ''
+            for f in self.files.values():    
+                choice = random.choice(f)
+                result_string += self._conversion(choice) + '_'
+            result_string = result_string[:-1]
+
+            if not self._unique:
+                return result_string
+
+            if not self._seen_map.get(result_string, False):
+                self._seen_map[result_string] = True
+                seen = True
+
+        return result_string
 
     def load(self, filepath):
         """
         TODO: Make this a lazy load
         """
         self.files[filepath] = [line for line in open(filepath, 'r')]
+        if self._total_combinations != 0:
+            self._total_combinations *= len(self.files[filepath])
+        else:
+            self._total_combinations = len(self.files[filepath])
 
     def _open_all(self):
         """

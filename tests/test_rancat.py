@@ -61,4 +61,16 @@ class TestRanCat:
             i.append(x)
             break
         assert i != []
+
+    def test_unique_option(self):
+        datafile = 'examples/data/colors.txt'
+        seed_value = 123
+        r = RanCat(seed=seed_value)
+        r._unique = True
+        r.load(datafile)
+        i = []
+        for x in r:
+            i.append(x)
+        assert i != []
+        assert len(i) == r._total_combinations
         
