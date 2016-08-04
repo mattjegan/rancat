@@ -9,6 +9,8 @@ class RanCat:
         self.seed = time if not seed else seed
         random.seed(self.seed)
 
+        self._conversion = self._default_conversion
+
     def load(self, filepath):
         """
         TODO: Make this a lazy load
@@ -25,7 +27,7 @@ class RanCat:
         result_string = ''
         for f in self.files.values():
             choice = random.choice(f)
-            result_string += self._tokenize(choice) + '_'
+            result_string += self._conversion(choice) + '_'
         return result_string[:-1]
 
     def _open_all(self):
@@ -36,10 +38,19 @@ class RanCat:
         """
         return
 
-    def _tokenize(self, phrase):
+    def _default_conversion(self, phrase):
         """
         Removes new lines, replaces whitespace and 
         hyphens with underscores, removes apostrophies.
         """
-        return phrase.strip('\n').replace(' ', '_').replace(
+        return phrase.rstrip().replace(' ', '_').replace(
             '-', '_').replace('\'', '')
+
+    def set_conversion(self, conversion_callable):
+        """
+        Sets the conversion method for phrases
+        """
+        if hasattr(conversion_callable, '__call__'):
+            self._conversion = conversion_callable
+        else:
+            raise TypeError('{} must be callable'.format(str(conversion_callable)))
