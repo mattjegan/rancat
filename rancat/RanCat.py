@@ -11,16 +11,13 @@ class RanCat:
 
         self._conversion = self._default_conversion
 
-    def load(self, filepath):
-        """
-        TODO: Make this a lazy load
-        """
-        self.files[filepath] = [line for line in open(filepath, 'r')]
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        return self.next()
 
     def next(self):
-        """
-        TODO: Convert this class to a proper iterator
-        """
         self._open_all()
 
         # Build the string
@@ -29,6 +26,12 @@ class RanCat:
             choice = random.choice(f)
             result_string += self._conversion(choice) + '_'
         return result_string[:-1]
+
+    def load(self, filepath):
+        """
+        TODO: Make this a lazy load
+        """
+        self.files[filepath] = [line for line in open(filepath, 'r')]
 
     def _open_all(self):
         """

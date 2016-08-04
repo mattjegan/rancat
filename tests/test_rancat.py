@@ -50,4 +50,15 @@ class TestRanCat:
         r.set_conversion(str.upper)
         processed_string = r._conversion(raw_string)
         assert processed_string == correct_string
+
+    def test_iterable(self):
+        datafile = 'examples/data/colors.txt'
+        seed_value = 123
+        r = RanCat(seed=seed_value)
+        r.load(datafile)
+        i = []
+        for x in r:
+            i.append(x)
+            break
+        assert i != []
         
