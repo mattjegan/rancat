@@ -53,6 +53,7 @@ class RanCat:
             self._total_combinations *= len(self.files[filepath])
         else:
             self._total_combinations = len(self.files[filepath])
+        return self
 
     def _open_all(self):
         """
@@ -78,6 +79,9 @@ class RanCat:
             self._conversion = conversion_callable
         else:
             raise TypeError('{} must be callable'.format(str(conversion_callable)))
+        return self
 
     def set_unique(self, boolean):
         self._unique = bool(boolean)
+        return self
+        

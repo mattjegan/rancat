@@ -73,4 +73,9 @@ class TestRanCat:
             i.append(x)
         assert i != []
         assert len(i) == r._total_combinations
+
+    def test_command_chaining(self):
+        datafile = 'examples/data/colors.txt'
+        r = RanCat().load(datafile).set_unique(True).set_conversion(str.upper)
+        assert isinstance(r, RanCat)
         
