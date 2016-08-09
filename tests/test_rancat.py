@@ -88,13 +88,35 @@ class TestRanCat:
         seed_value = 123
         r = RanCat(seed=seed_value)
         r.load(datafile).load(datafile).load(datafile)
-        print("loaded")
         result = r.next()
         result = result.split('_')
         assert len(result) == 3
+
+    def test_reset(self):
+        datafile = 'examples/data/colors.txt'
+        seed_value = 123
+        r = RanCat(seed=seed_value, unique=True)
+        r.load(datafile).load(datafile)
+        i = []
+        for x in r:
+            i.append(x)
+        assert i != []
+        assert len(i) == r._total_combinations
+        
+        r.reset()
+        i = []
+        for x in r:
+            i.append(x)
+        assert i != []
+        assert len(i) == r._total_combinations
 
     def test_command_chaining(self):
         datafile = 'examples/data/colors.txt'
         r = RanCat().load(datafile).set_unique(True).set_conversion(str.upper).set_read_size(100)
         assert isinstance(r, RanCat)
-        
+
+
+def main():
+    pass
+
+if __name__ == "__main__": main()

@@ -56,9 +56,20 @@ class RanCat:
     def load(self, filepath):
         original_filepath = filepath
         while filepath in self.files:
+            # We can multi-hash here since we don't need
+            # to be able to access a file via filepath after this
+            # method.
             filepath = hash(filepath) * hash(filepath)
 
         self.files[filepath] = [open(original_filepath, 'r'), [], True] # (file_obj, current_lines, open)
+        return self
+
+    def reset(self):
+        """
+        Resets the combination tracking
+        """
+        self._total_combinations = 0
+        self._seen_map = {}
         return self
 
     def _open_all(self):
