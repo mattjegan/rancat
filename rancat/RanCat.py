@@ -1,8 +1,8 @@
+from collections import OrderedDict
 import random
 
 class RanCat:
     def __init__(self, seed=None, unique=False, read_size=1000):
-        from collections import OrderedDict
         self.files = OrderedDict()
 
         from time import time
@@ -64,13 +64,25 @@ class RanCat:
         self.files[filepath] = [open(original_filepath, 'r'), [], True] # (file_obj, current_lines, open)
         return self
 
-    def reset(self):
+    def soft_reset(self):
         """
         Resets the combination tracking
         """
         self._total_combinations = 0
         self._seen_map = {}
         return self
+
+    def hard_reset(self):
+        """
+        Performs a soft reset as well as clears the files structure
+        """
+        self.soft_reset()
+        for filepath in self.files:
+            try:
+                self.files[filepath][0].close()
+            except:
+                continue
+        self.files = OrderedDict()
 
     def _open_all(self):
         """
