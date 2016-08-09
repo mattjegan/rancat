@@ -74,8 +74,17 @@ class TestRanCat:
         assert i != []
         assert len(i) == r._total_combinations
 
+    def test_read_size_option(self):
+        datafile = 'examples/data/colors.txt'
+        seed_value = 123
+        r = RanCat(seed=seed_value)
+        r.set_read_size(2)
+        r.load(datafile)
+        r._refresh_all(r._read_size)
+        assert len(r.files[datafile][1]) == 2
+
     def test_command_chaining(self):
         datafile = 'examples/data/colors.txt'
-        r = RanCat().load(datafile).set_unique(True).set_conversion(str.upper)
+        r = RanCat().load(datafile).set_unique(True).set_conversion(str.upper).set_read_size(100)
         assert isinstance(r, RanCat)
         

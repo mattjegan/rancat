@@ -15,6 +15,13 @@ class RanCat:
         self._seen_map = {}
         self._read_size = int(read_size)
 
+    def __del__(self):
+        for filepath in self.files:
+            try:
+                self.files[filepath][0].close()
+            except:
+                continue
+
     def __iter__(self):
         return self
     
@@ -102,6 +109,6 @@ class RanCat:
         return self
 
     def set_read_size(self, read_size):
-        self._unique = int(read_size)
+        self._read_size = int(read_size)
         return self
         
