@@ -1,5 +1,7 @@
 # RanCat
 
+[![Build Status](https://travis-ci.org/mattjegan/rancat.svg?branch=develop)](https://travis-ci.org/mattjegan/rancat)
+
 RanCat is a string generator that can use multiple text files (word lists) as sources. What constitutes a word in a word list is simply a line in the file. RanCat will generate pseudo-random strings that are suitable for use as github branch names, database names, project names, and so on. The generated names are strings which contain no whitespace.
 
 ## Installation
