@@ -83,6 +83,16 @@ class TestRanCat:
         r._refresh_all(r._read_size)
         assert len(r.files[datafile][1]) == 2
 
+    def test_duplicate_file_allowed(self):
+        datafile = 'examples/data/colors.txt'
+        seed_value = 123
+        r = RanCat(seed=seed_value)
+        r.load(datafile).load(datafile).load(datafile)
+        print("loaded")
+        result = r.next()
+        result = result.split('_')
+        assert len(result) == 3
+
     def test_command_chaining(self):
         datafile = 'examples/data/colors.txt'
         r = RanCat().load(datafile).set_unique(True).set_conversion(str.upper).set_read_size(100)

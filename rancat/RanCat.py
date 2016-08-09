@@ -54,7 +54,11 @@ class RanCat:
         return result_string
 
     def load(self, filepath):
-        self.files[filepath] = [open(filepath, 'r'), [], True] # (file_obj, current_lines, open)
+        original_filepath = filepath
+        while filepath in self.files:
+            filepath = hash(filepath) * hash(filepath)
+
+        self.files[filepath] = [open(original_filepath, 'r'), [], True] # (file_obj, current_lines, open)
         return self
 
     def _open_all(self):
