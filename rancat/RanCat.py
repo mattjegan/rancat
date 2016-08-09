@@ -1,8 +1,8 @@
+from collections import OrderedDict
 import random
 
 class RanCat:
-    def __init__(self, seed=None, unique=False):
-        from collections import OrderedDict
+    def __init__(self, seed=None, unique=False, read_size=1000):
         self.files = OrderedDict()
 
         from time import time
@@ -10,9 +10,17 @@ class RanCat:
         random.seed(self.seed)
 
         self._conversion = self._default_conversion
-        self._unique = unique
+        self._unique = bool(unique)
         self._total_combinations = 0
         self._seen_map = {}
+        self._read_size = int(read_size)
+
+    def __del__(self):
+        for filepath in self.files:
+            try:
+                self.files[filepath][0].close()
+            except:
+                continue
 
     def __iter__(self):
         return self
@@ -21,7 +29,8 @@ class RanCat:
         return self.next()
 
     def next(self):
-        self._open_all()
+        if (len(self._seen_map.keys()) < self._total_combinations and len(self._seen_map.keys()) > self._total_combinations // 2) or len(self._seen_map.keys()) == 0:
+            self._refresh_all(self._read_size)
 
         if len(self._seen_map.keys()) == self._total_combinations:
             raise StopIteration('Exhausted combinations')
@@ -30,8 +39,8 @@ class RanCat:
         seen = False
         while not seen:
             result_string = ''
-            for f in self.files.values():    
-                choice = random.choice(f)
+            for file_tuple in self.files.values():    
+                choice = random.choice(file_tuple[1])
                 result_string += self._conversion(choice) + '_'
             result_string = result_string[:-1]
 
@@ -45,15 +54,35 @@ class RanCat:
         return result_string
 
     def load(self, filepath):
-        """
-        TODO: Make this a lazy load
-        """
-        self.files[filepath] = [line for line in open(filepath, 'r')]
-        if self._total_combinations != 0:
-            self._total_combinations *= len(self.files[filepath])
-        else:
-            self._total_combinations = len(self.files[filepath])
+        original_filepath = filepath
+        while filepath in self.files:
+            # We can multi-hash here since we don't need
+            # to be able to access a file via filepath after this
+            # method.
+            filepath = hash(filepath) * hash(filepath)
+
+        self.files[filepath] = [open(original_filepath, 'r'), [], True] # (file_obj, current_lines, open)
         return self
+
+    def soft_reset(self):
+        """
+        Resets the combination tracking
+        """
+        self._total_combinations = 0
+        self._seen_map = {}
+        return self
+
+    def hard_reset(self):
+        """
+        Performs a soft reset as well as clears the files structure
+        """
+        self.soft_reset()
+        for filepath in self.files:
+            try:
+                self.files[filepath][0].close()
+            except:
+                continue
+        self.files = OrderedDict()
 
     def _open_all(self):
         """
@@ -62,6 +91,27 @@ class RanCat:
         TODO: Implement when doing lazy loading
         """
         return
+
+    def _refresh_all(self, n):
+        """
+        Reads in the next n lines from the files
+        """
+        self._total_combinations = 0
+        for filepath in self.files:
+            if self.files[filepath][2]:
+                for i in range(0, n):
+                    line = self.files[filepath][0].readline()
+                    if not line:
+                        self.files[filepath][0].close()
+                        self.files[filepath][2] = False
+                        break
+                    self.files[filepath][1].append(line)
+
+            # Recalculate _total_combinations
+            if self._total_combinations == 0:
+                self._total_combinations = len(self.files[filepath][1])
+            else:
+                self._total_combinations *= len(self.files[filepath][1])
 
     def _default_conversion(self, phrase):
         """
@@ -83,5 +133,9 @@ class RanCat:
 
     def set_unique(self, boolean):
         self._unique = bool(boolean)
+        return self
+
+    def set_read_size(self, read_size):
+        self._read_size = int(read_size)
         return self
         
