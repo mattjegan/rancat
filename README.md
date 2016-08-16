@@ -1,6 +1,7 @@
 # RanCat
 
-[![Build Status](https://travis-ci.org/mattjegan/rancat.svg?branch=develop)](https://travis-ci.org/mattjegan/rancat) [![Coverage Status](https://coveralls.io/repos/github/mattjegan/rancat/badge.svg?branch=master)](https://coveralls.io/github/mattjegan/rancat?branch=master) [![PyPI version](https://badge.fury.io/py/rancat.svg)](https://badge.fury.io/py/rancat)
+[![Build Status](https://travis-ci.org/mattjegan/rancat.svg?branch=develop)](https://travis-ci.org/mattjegan/rancat) [![Coverage Status](https://coveralls.io/repos/github/mattjegan/rancat/badge.svg?branch=master)](https://coveralls.io/github/mattjegan/rancat?branch=master) [![Code Health](https://landscape.io/github/mattjegan/rancat/master/landscape.svg?style=flat)](https://landscape.io/github/mattjegan/rancat/master)
+ [![PyPI version](https://badge.fury.io/py/rancat.svg)](https://badge.fury.io/py/rancat)
 
 RanCat is a string generator that can use multiple text files (word lists) as sources. What constitutes a word in a word list is simply a line in the file. RanCat will generate pseudo-random strings that are suitable for use as github branch names, database names, project names, and so on. The generated names are strings which contain no whitespace.
 
