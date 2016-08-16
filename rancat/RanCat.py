@@ -1,6 +1,7 @@
 from collections import OrderedDict
 import random
 
+from .conversions import default_conversion
 from .Handler import Handler
 
 class RanCat(object):
@@ -11,7 +12,8 @@ class RanCat(object):
         self.seed = time() if not seed else seed
         random.seed(self.seed)
 
-        self._conversion = self._default_conversion
+        self._conversion = default_conversion
+        self._separator = '_'
         self._unique = bool(unique)
         self._total_combinations = 0
         self._seen_map = {}
@@ -42,7 +44,7 @@ class RanCat(object):
             result_string = ''
             for file_tuple in self.files.values():    
                 choice = random.choice(file_tuple.current_lines)
-                result_string += self._conversion(choice) + '_'
+                result_string += self._conversion(choice, self._separator) + self._separator
             result_string = result_string[:-1]
 
             if not self._unique:
@@ -105,14 +107,6 @@ class RanCat(object):
             else:
                 self._total_combinations *= len(self.files[filepath].current_lines)
 
-    def _default_conversion(self, phrase):
-        """
-        Removes new lines, replaces whitespace and 
-        hyphens with underscores, removes apostrophies.
-        """
-        return phrase.rstrip().replace(' ', '_').replace(
-            '-', '_').replace('\'', '')
-
     def set_conversion(self, conversion_callable):
         """
         Sets the conversion method for phrases
@@ -131,6 +125,10 @@ class RanCat(object):
         self._read_size = int(read_size)
         return self
     
+    def set_separator(self, sep):
+        self._separator = str(sep)
+        return self
+
     def load_structure(self, *args):
         """
         Accepts a number of arguments which may be filepaths

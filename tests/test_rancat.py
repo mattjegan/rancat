@@ -3,7 +3,7 @@ import os
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
 
 import pytest
-from rancat import RanCat
+from rancat import RanCat, conversions
 
 class TestRanCat:
     def test_init_without_seed(self):
@@ -42,7 +42,7 @@ class TestRanCat:
         raw_string = 'S\'tr ing   '
         correct_string = 'Str_ing'
         r = RanCat()
-        processed_string = r._conversion(raw_string)
+        processed_string = r._conversion(raw_string, r._separator)
         assert processed_string == correct_string
 
     def test_set_conversion(self):
@@ -145,6 +145,23 @@ class TestRanCat:
         r = RanCat().load_structure(datafile, ['cat', 'dog'])
         phrase = r.next()
         assert phrase.endswith('cat') or phrase.endswith('dog')
+
+class TestConversions:
+    def test_default_conversion(self):
+        phrase = conversions.default_conversion('a B-c\'', '_')
+        assert phrase == 'a_B_c'
+
+    def test_ascii_lower(self):
+        phrase = conversions.ascii_lower('a B-c\'', '_')
+        assert phrase == 'a_b_c'
+
+    def test_ascii_upper(self):
+        phrase = conversions.ascii_upper('a B-c\'', '_')
+        assert phrase == 'A_B_C'
+
+    def test_camel_case(self):
+        phrase = conversions.camel_case('a B-c\'', '_')
+        assert phrase == 'A_b_c'
 
 def main():
     pass
