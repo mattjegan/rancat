@@ -19,12 +19,7 @@ class RanCat(object):
 
     def __del__(self):
         for filepath in self.files:
-            try:
-                self.files[filepath].close()
-            except KeyError:
-                continue
-            except AttributeError:
-                continue
+            self.files[filepath].close()
 
     def __iter__(self):
         return self
@@ -87,10 +82,7 @@ class RanCat(object):
         """
         self.soft_reset()
         for filepath in self.files:
-            try:
-                self.files[filepath].close()
-            except KeyError:
-                continue
+            self.files[filepath].close()
         self.files = OrderedDict()
 
     def _refresh_all(self, n):

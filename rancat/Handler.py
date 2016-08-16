@@ -23,9 +23,6 @@ class Handler(object):
             self.opened = True
             self.cursor = 0
 
-    def get_compact(self):
-        return [self.processed_obj, self.current_lines, self.opened]
-
     def close(self):
         if self.obj_type == TextIOWrapper:
             self.processed_obj.close()

@@ -1,6 +1,8 @@
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
+
+import pytest
 from rancat import RanCat
 
 class TestRanCat:
@@ -50,6 +52,10 @@ class TestRanCat:
         r.set_conversion(str.upper)
         processed_string = r._conversion(raw_string)
         assert processed_string == correct_string
+
+        # Test TypeError gets raised
+        with pytest.raises(TypeError):
+            r.set_conversion("hello")
 
     def test_iterable(self):
         datafile = 'examples/data/colors.txt'
@@ -139,7 +145,6 @@ class TestRanCat:
         r = RanCat().load_structure(datafile, ['cat', 'dog'])
         phrase = r.next()
         assert phrase.endswith('cat') or phrase.endswith('dog')
-
 
 def main():
     pass
