@@ -1,6 +1,8 @@
 from collections import OrderedDict
 import random
 
+from .Handler import Handler
+
 class RanCat(object):
     def __init__(self, seed=None, unique=False, read_size=1000):
         self.files = OrderedDict()
@@ -18,8 +20,10 @@ class RanCat(object):
     def __del__(self):
         for filepath in self.files:
             try:
-                self.files[filepath][0].close()
+                self.files[filepath].close()
             except KeyError:
+                continue
+            except AttributeError:
                 continue
 
     def __iter__(self):
@@ -42,7 +46,7 @@ class RanCat(object):
         while not seen:
             result_string = ''
             for file_tuple in self.files.values():    
-                choice = random.choice(file_tuple[1])
+                choice = random.choice(file_tuple.current_lines)
                 result_string += self._conversion(choice) + '_'
             result_string = result_string[:-1]
 
@@ -56,14 +60,17 @@ class RanCat(object):
         return result_string
 
     def load(self, filepath):
+
         original_filepath = filepath
+        filepath = str(filepath)
         while filepath in self.files:
             # We can multi-hash here since we don't need
             # to be able to access a file via filepath after this
             # method.
             filepath = hash(filepath) * hash(filepath)
 
-        self.files[filepath] = [open(original_filepath, 'r'), [], True] # (file_obj, current_lines, open)
+        self.files[filepath] = Handler(original_filepath)
+
         return self
 
     def soft_reset(self):
@@ -81,18 +88,10 @@ class RanCat(object):
         self.soft_reset()
         for filepath in self.files:
             try:
-                self.files[filepath][0].close()
+                self.files[filepath].close()
             except KeyError:
                 continue
         self.files = OrderedDict()
-
-    def _open_all(self):
-        """
-        Opens all the files
-
-        TODO: Implement when doing lazy loading
-        """
-        return
 
     def _refresh_all(self, n):
         """
@@ -100,20 +99,19 @@ class RanCat(object):
         """
         self._total_combinations = 0
         for filepath in self.files:
-            if self.files[filepath][2]:
+            if self.files[filepath].is_open():
                 for _ in range(0, n):
-                    line = self.files[filepath][0].readline()
+                    line = self.files[filepath].read_next()
                     if not line:
-                        self.files[filepath][0].close()
-                        self.files[filepath][2] = False
+                        self.files[filepath].close()
                         break
-                    self.files[filepath][1].append(line)
+                    self.files[filepath].append(line)
 
             # Recalculate _total_combinations
             if self._total_combinations == 0:
-                self._total_combinations = len(self.files[filepath][1])
+                self._total_combinations = len(self.files[filepath].current_lines)
             else:
-                self._total_combinations *= len(self.files[filepath][1])
+                self._total_combinations *= len(self.files[filepath].current_lines)
 
     def _default_conversion(self, phrase):
         """
@@ -140,4 +138,16 @@ class RanCat(object):
     def set_read_size(self, read_size):
         self._read_size = int(read_size)
         return self
-        
+    
+    def load_structure(self, *args):
+        """
+        Accepts a number of arguments which may be filepaths
+        or lists/tuples.
+
+        If the arg was a filepath then it is loaded, otherwise
+        the list/tuple is used like a file.
+        """
+        for obj in args:
+            self.load(obj)
+
+        return self

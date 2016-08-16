@@ -81,7 +81,7 @@ class TestRanCat:
         r.set_read_size(2)
         r.load(datafile)
         r._refresh_all(r._read_size)
-        assert len(r.files[datafile][1]) == 2
+        assert len(r.files[datafile].current_lines) == 2
 
     def test_duplicate_file_allowed(self):
         datafile = 'examples/data/colors.txt'
@@ -133,6 +133,12 @@ class TestRanCat:
         datafile = 'examples/data/colors.txt'
         r = RanCat().load(datafile).set_unique(True).set_conversion(str.upper).set_read_size(100)
         assert isinstance(r, RanCat)
+
+    def test_load_structure(self):
+        datafile = 'examples/data/colors.txt'
+        r = RanCat().load_structure(datafile, ['cat', 'dog'])
+        phrase = r.next()
+        assert phrase.endswith('cat') or phrase.endswith('dog')
 
 
 def main():
