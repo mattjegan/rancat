@@ -1,5 +1,6 @@
 # RanCat 1.0.0
 * Allows custom phrase structure via `RanCat().load_structure(*args)` where args are either filepaths (str) or iterables of strings (tuples, lists)
+* `rancat.conversions` provides a number of functions that can be passed to `RanCat.set_conversion`
 
 # RanCat 0.0.3
 
