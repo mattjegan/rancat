@@ -146,6 +146,12 @@ class TestRanCat:
         phrase = r.next()
         assert phrase.endswith('cat') or phrase.endswith('dog')
 
+    def test_set_separator(self):
+        r = RanCat()
+        assert r._separator == '_'
+        r.set_separator('-')
+        assert r._separator == '-'
+
 class TestConversions:
     def test_default_conversion(self):
         phrase = conversions.default_conversion('a B-c\'', '_')
