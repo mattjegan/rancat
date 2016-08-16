@@ -1,7 +1,10 @@
 language: python
 python:
-  - 3.5
+- 3.5
 install:
-  - pip install pytest
+- pip install pytest
+- pip install pytest-cov
 script:
-  - py.test
+- py.test --cov-report= --cov=rancat tests/
+after_success:
+- coveralls
