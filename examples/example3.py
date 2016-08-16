@@ -1,8 +1,3 @@
-# Sets up Python Path, ignore this.
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
-
 # Example 3 - Generate phrases from iterables and files
 from rancat import RanCat
 
