@@ -1,7 +1,7 @@
 from collections import OrderedDict
 import random
 
-class RanCat:
+class RanCat(object):
     def __init__(self, seed=None, unique=False, read_size=1000):
         self.files = OrderedDict()
 
@@ -19,7 +19,7 @@ class RanCat:
         for filepath in self.files:
             try:
                 self.files[filepath][0].close()
-            except:
+            except KeyError:
                 continue
 
     def __iter__(self):
@@ -29,7 +29,9 @@ class RanCat:
         return self.next()
 
     def next(self):
-        if (len(self._seen_map.keys()) < self._total_combinations and len(self._seen_map.keys()) > self._total_combinations // 2) or len(self._seen_map.keys()) == 0:
+        if (len(self._seen_map.keys()) < self._total_combinations and \
+            len(self._seen_map.keys()) > self._total_combinations // 2) \
+            or len(self._seen_map.keys()) == 0:
             self._refresh_all(self._read_size)
 
         if len(self._seen_map.keys()) == self._total_combinations:
@@ -80,7 +82,7 @@ class RanCat:
         for filepath in self.files:
             try:
                 self.files[filepath][0].close()
-            except:
+            except KeyError:
                 continue
         self.files = OrderedDict()
 
@@ -99,7 +101,7 @@ class RanCat:
         self._total_combinations = 0
         for filepath in self.files:
             if self.files[filepath][2]:
-                for i in range(0, n):
+                for _ in range(0, n):
                     line = self.files[filepath][0].readline()
                     if not line:
                         self.files[filepath][0].close()
