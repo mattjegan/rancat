@@ -1,3 +1,4 @@
+codeclimate-test-reporter
 coverage==4.0.3
 py==1.4.31
 pytest==2.9.2
