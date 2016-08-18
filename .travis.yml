@@ -2,8 +2,12 @@ language: python
 python:
 - 3.5
 install:
+- pip install codeclimate-test-reporter
 - pip install -r requirements.txt
 - pip install -r tests/requirements.txt
+addons:
+    code_climate:
+        repo_token: b55f13f013d1cb5feabd1d95129b6c5dda282987d25a58b2c0826c84192ae2f3
 script:
 - py.test --cov-report= --cov=rancat tests/
 after_success:
