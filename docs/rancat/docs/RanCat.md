@@ -96,7 +96,45 @@ r.set_conversion(ascii_lower)
 ```
 
 ### RanCat.set_unique(boolean)
+*returns RanCat*
+
+Sets the uniqueness property, boolean should be:
+
+* **True**: All phrases will be unique
+* **False**: Phrases are not necessarily unique
+
+```python
+r = RanCat()
+r.set_unique(True)
+```
+
 ### RanCat.set_read_size(read_size)
+*returns RanCat*
+
+Sets the read size of the data sources. The default is 1000 units. A unit may be a line in a file or a value at some index in a list or tuple.
+
+```python
+r = RanCat()
+r.set_read_size(5000)
+```
+
 ### RanCat.set_separator(sep)
+*returns RanCat*
+
+Sets the value of the separator to be used in generating phrases. The default is the underscore `_`. This value is not only used to join units together but is also passed to the conversion method for various uses such as substitution of certain characters.
+
+```python
+r = RanCat()
+r.set_separator(' ') # RanCat will now use spaces between units
+```
+
 ### RanCat.load_structure(*args)
+*returns RanCat*
+
+Similar to *RanCat.load()* but can take multiple data sources.
+
+```python
+r = RanCat()
+r.load_structure('path/to/file.txt', ['the', 'a'], ('dog', 'cat'), ['!']) # Loads all 4 sources into RanCat
+``` 
 
