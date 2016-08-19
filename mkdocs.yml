@@ -3,7 +3,7 @@ site_author: Matthew Egan (github/mattjegan)
 repo_url: https://github.com/mattjegan/rancat
 repo_name: mattjegan/rancat
 pages:
-- Home: index.md
-- The RanCat Object: RanCat.md
-- Contributing: contributing.md
+- Home: rancat/docs/index.md
+- The RanCat Object: rancat/docs/RanCat.md
+- Contributing: rancat/docs/contributing.md
 theme: readthedocs
