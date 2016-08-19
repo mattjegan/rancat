@@ -23,12 +23,10 @@ def default_conversion(phrase, sep):
             '-', sep).replace('\'', '')
 
 def ascii_lower(phrase, sep):
-    phrase = phrase.encode('ascii', 'ignore').lower().decode('utf-8')
-    return default_conversion(phrase, sep)
+    return default_conversion(phrase.encode('ascii', 'ignore').decode('utf-8').lower(), sep)
 
 def ascii_upper(phrase, sep):
-    phrase = phrase.encode('ascii', 'ignore').upper().decode('utf-8')
-    return default_conversion(phrase, sep)
+    return default_conversion(phrase.encode('ascii', 'ignore').decode('utf-8').upper(), sep)
 
 def camel_case(phrase, sep):
     phrase = default_conversion(phrase, sep).lower()

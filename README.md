@@ -2,12 +2,12 @@
 
 Master
 
-[![Build Status](https://travis-ci.org/mattjegan/rancat.svg?branch=master)](https://travis-ci.org/mattjegan/rancat) [![Coverage Status](https://coveralls.io/repos/github/mattjegan/rancat/badge.svg?branch=master)](https://coveralls.io/github/mattjegan/rancat?branch=master) [![Code Health](https://landscape.io/github/mattjegan/rancat/master/landscape.svg?style=flat)](https://landscape.io/github/mattjegan/rancat/master)
+[![Build Status](https://travis-ci.org/mattjegan/rancat.svg?branch=master)](https://travis-ci.org/mattjegan/rancat) [![codecov](https://codecov.io/gh/mattjegan/rancat/branch/master/graph/badge.svg)](https://codecov.io/gh/mattjegan/rancat) [![Code Health](https://landscape.io/github/mattjegan/rancat/master/landscape.svg?style=flat)](https://landscape.io/github/mattjegan/rancat/master)
  [![PyPI version](https://badge.fury.io/py/rancat.svg)](https://badge.fury.io/py/rancat)
  
  Develop
  
- [![Build Status](https://travis-ci.org/mattjegan/rancat.svg?branch=develop)](https://travis-ci.org/mattjegan/rancat) [![Coverage Status](https://coveralls.io/repos/github/mattjegan/rancat/badge.svg?branch=develop)](https://coveralls.io/github/mattjegan/rancat?branch=develop) 
+ [![Build Status](https://travis-ci.org/mattjegan/rancat.svg?branch=develop)](https://travis-ci.org/mattjegan/rancat) [![codecov](https://codecov.io/gh/mattjegan/rancat/branch/develop/graph/badge.svg)](https://codecov.io/gh/mattjegan/rancat)
  [![Code Health](https://landscape.io/github/mattjegan/rancat/develop/landscape.svg?style=flat)](https://landscape.io/github/mattjegan/rancat/develop)
 
 

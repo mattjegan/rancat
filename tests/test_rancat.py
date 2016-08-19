@@ -139,7 +139,7 @@ class TestRanCat:
         assert i != []
         assert len(i) == r._total_combinations
 
-        r.hard_reset()
+        r = r.hard_reset()
         i = []
         for x in r:
             i.append(x)

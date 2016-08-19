@@ -1,0 +1,42 @@
+# Welcome to RanCat
+[![Build Status](https://travis-ci.org/mattjegan/rancat.svg?branch=master)](https://travis-ci.org/mattjegan/rancat) [![Coverage Status](https://coveralls.io/repos/github/mattjegan/rancat/badge.svg?branch=master)](https://coveralls.io/github/mattjegan/rancat?branch=master) [![Code Health](https://landscape.io/github/mattjegan/rancat/master/landscape.svg?style=flat)](https://landscape.io/github/mattjegan/rancat/master)
+ [![PyPI version](https://badge.fury.io/py/rancat.svg)](https://badge.fury.io/py/rancat)
+
+This is the full documentation of [RanCat](https://github.com/mattjegan/rancat), an open source Python **Ran**dom con**Cat**enation engine.
+
+## Use Cases
+
+RanCat is a string generator that can use multiple text sources, including files and native Python lists and tuples. What constitutes a word in a word list is simply an atomic entity in the source, e.g. a line in a file, or a value in a list. RanCat will generate pseudo-random strings that are suitable for use as :
+
+* CVS Branch Names
+* Database Names
+* Project/Repository Names
+* Online Avatar Names
+* Baby Names
+* and so on
+
+## Installation
+
+```bash
+pip install rancat
+```
+
+## Basic Usage
+
+```python
+from rancat import RanCat
+
+r = RanCat()
+
+# Load in our text sources
+r.load(['red', 'orange', 'blue'])
+r.load(['car', 'tractor', 'truck'])
+
+# Generate a new string
+r.next()
+>>> orange_truck
+r.next()
+>>> red_tractor
+r.next()
+>>> orange_tractor
+```

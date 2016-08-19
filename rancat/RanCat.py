@@ -102,6 +102,7 @@ class RanCat(object):
         for filepath in self.files:
             self.files[filepath].close()
         self.files = OrderedDict()
+        return self
 
     def _refresh_all(self, n):
         """
