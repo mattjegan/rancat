@@ -67,7 +67,7 @@ r.next()
 ```
 
 ### RanCat.hard_reset()
-*returns None*
+*returns RanCat*
 
 Performs *RanCat.soft_reset()* and also clears the loaded sources.
 
