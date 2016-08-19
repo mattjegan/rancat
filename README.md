@@ -3,7 +3,7 @@
 Master
 
 [![Build Status](https://travis-ci.org/mattjegan/rancat.svg?branch=master)](https://travis-ci.org/mattjegan/rancat) [![codecov](https://codecov.io/gh/mattjegan/rancat/branch/master/graph/badge.svg)](https://codecov.io/gh/mattjegan/rancat) [![Code Health](https://landscape.io/github/mattjegan/rancat/master/landscape.svg?style=flat)](https://landscape.io/github/mattjegan/rancat/master)
- [![PyPI version](https://badge.fury.io/py/rancat.svg)](https://badge.fury.io/py/rancat)
+ [![PyPI version](https://badge.fury.io/py/rancat.svg)](https://badge.fury.io/py/rancat) [![Documentation Status](https://readthedocs.org/projects/rancat/badge/?version=latest)](http://rancat.readthedocs.io/en/latest/?badge=latest)
  
  Develop
  

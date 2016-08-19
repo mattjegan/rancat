@@ -1,6 +1,6 @@
 # Welcome to RanCat
-[![Build Status](https://travis-ci.org/mattjegan/rancat.svg?branch=master)](https://travis-ci.org/mattjegan/rancat) [![Coverage Status](https://coveralls.io/repos/github/mattjegan/rancat/badge.svg?branch=master)](https://coveralls.io/github/mattjegan/rancat?branch=master) [![Code Health](https://landscape.io/github/mattjegan/rancat/master/landscape.svg?style=flat)](https://landscape.io/github/mattjegan/rancat/master)
- [![PyPI version](https://badge.fury.io/py/rancat.svg)](https://badge.fury.io/py/rancat)
+[![Build Status](https://travis-ci.org/mattjegan/rancat.svg?branch=master)](https://travis-ci.org/mattjegan/rancat) [![codecov](https://codecov.io/gh/mattjegan/rancat/branch/master/graph/badge.svg)](https://codecov.io/gh/mattjegan/rancat) [![Code Health](https://landscape.io/github/mattjegan/rancat/master/landscape.svg?style=flat)](https://landscape.io/github/mattjegan/rancat/master)
+ [![PyPI version](https://badge.fury.io/py/rancat.svg)](https://badge.fury.io/py/rancat) [![Documentation Status](https://readthedocs.org/projects/rancat/badge/?version=latest)](http://rancat.readthedocs.io/en/latest/?badge=latest)
 
 This is the full documentation of [RanCat](https://github.com/mattjegan/rancat), an open source Python **Ran**dom con**Cat**enation engine.
 
