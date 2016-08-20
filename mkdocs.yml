@@ -6,4 +6,6 @@ pages:
 - Home: index.md
 - The RanCat Object: RanCat.md
 - Contributing: contributing.md
+- CHANGELOG: CHANGELOG.md
+- LICENSE: LICENSE.md
 theme: readthedocs
