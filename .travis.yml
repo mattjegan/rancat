@@ -10,6 +10,5 @@ addons:
 script:
 - py.test --cov-report= --cov=rancat tests/
 after_success:
-- coveralls
 - bash <(curl -s https://codecov.io/bash)
 - CODECLIMATE_REPO_TOKEN=b55f13f013d1cb5feabd1d95129b6c5dda282987d25a58b2c0826c84192ae2f3 codeclimate-test-reporter
