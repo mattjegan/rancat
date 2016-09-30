@@ -22,7 +22,7 @@ from .Handler import Handler
 
 class RanCat(object):
     def __init__(self, seed=None, unique=False, read_size=1000):
-        self.files = OrderedDict()
+        self.handlers = OrderedDict()
 
         from time import time
         self.seed = time() if not seed else seed
@@ -36,8 +36,8 @@ class RanCat(object):
         self._read_size = int(read_size)
 
     def __del__(self):
-        for filepath in self.files:
-            self.files[filepath].close()
+        for handler in self.handlers:
+            self.handlers[handler].close()
 
     def __iter__(self):
         return self
@@ -58,8 +58,8 @@ class RanCat(object):
         seen = False
         while not seen:
             result_string = ''
-            for file_tuple in self.files.values():    
-                choice = random.choice(file_tuple.current_lines)
+            for handler in self.handlers.values():
+                choice = random.choice(handler.current_lines)
                 result_string += self._conversion(choice, self._separator) + self._separator
             result_string = result_string[:-1]
 
@@ -72,17 +72,18 @@ class RanCat(object):
 
         return result_string
 
-    def load(self, filepath):
+    def load(self, *sources):
 
-        original_filepath = filepath
-        filepath = str(filepath)
-        while filepath in self.files:
-            # We can multi-hash here since we don't need
-            # to be able to access a file via filepath after this
-            # method.
-            filepath = hash(filepath) * hash(filepath)
+        for source in sources:
+            original_source = source
+            source = str(source)
+            while source in self.handlers:
+                # We can multi-hash here since we don't need
+                # to be able to access a file via filepath after this
+                # method.
+                source = hash(source) * hash(source)
 
-        self.files[filepath] = Handler(original_filepath)
+            self.handlers[source] = Handler(original_source)
 
         return self
 
@@ -99,9 +100,9 @@ class RanCat(object):
         Performs a soft reset as well as clears the files structure
         """
         self.soft_reset()
-        for filepath in self.files:
-            self.files[filepath].close()
-        self.files = OrderedDict()
+        for handler in self.handlers:
+            self.handlers[handler].close()
+        self.handlers = OrderedDict()
         return self
 
     def _refresh_all(self, n):
@@ -109,20 +110,20 @@ class RanCat(object):
         Reads in the next n lines from the files
         """
         self._total_combinations = 0
-        for filepath in self.files:
-            if self.files[filepath].is_open():
+        for handler in self.handlers:
+            if self.handlers[handler].is_open():
                 for _ in range(0, n):
-                    line = self.files[filepath].read_next()
+                    line = self.handlers[handler].read_next()
                     if not line:
-                        self.files[filepath].close()
+                        self.handlers[handler].close()
                         break
-                    self.files[filepath].append(line)
+                    self.handlers[handler].append(line)
 
             # Recalculate _total_combinations
             if self._total_combinations == 0:
-                self._total_combinations = len(self.files[filepath].current_lines)
+                self._total_combinations = len(self.handlers[handler].current_lines)
             else:
-                self._total_combinations *= len(self.files[filepath].current_lines)
+                self._total_combinations *= len(self.handlers[handler].current_lines)
 
     def set_conversion(self, conversion_callable):
         """
@@ -144,17 +145,4 @@ class RanCat(object):
     
     def set_separator(self, sep):
         self._separator = str(sep)
-        return self
-
-    def load_structure(self, *args):
-        """
-        Accepts a number of arguments which may be filepaths
-        or lists/tuples.
-
-        If the arg was a filepath then it is loaded, otherwise
-        the list/tuple is used like a file.
-        """
-        for obj in args:
-            self.load(obj)
-
         return self

@@ -20,14 +20,14 @@ from rancat import RanCat, conversions
 class TestRanCat:
     def test_init_without_seed(self):
         r = RanCat()
-        assert len(r.files) == 0
+        assert len(r.handlers) == 0
         assert not hasattr(r.seed, '__call__')
         assert hasattr(r._conversion, '__call__')
 
     def test_init_with_seed(self):
         seed_value = 123
         r = RanCat(seed=seed_value)
-        assert len(r.files) == 0
+        assert len(r.handlers) == 0
         assert not hasattr(r.seed, '__call__')
         assert r.seed == seed_value
         assert hasattr(r._conversion, '__call__')
@@ -37,7 +37,14 @@ class TestRanCat:
         seed_value = 123
         r = RanCat(seed=seed_value)
         r.load(datafile)
-        assert len(r.files) == 1
+        assert len(r.handlers) == 1
+
+    def test_load_many(self):
+        datafile = 'examples/data/colors.txt'
+        r = RanCat()
+        r.load(datafile, ['cat', 'dog'])
+        phrase = r.next()
+        assert phrase.endswith('cat') or phrase.endswith('dog')
 
     def test_next(self):
         datafile = 'examples/data/colors.txt'
@@ -99,7 +106,7 @@ class TestRanCat:
         r.set_read_size(2)
         r.load(datafile)
         r._refresh_all(r._read_size)
-        assert len(r.files[datafile].current_lines) == 2
+        assert len(r.handlers[datafile].current_lines) == 2
 
     def test_duplicate_file_allowed(self):
         datafile = 'examples/data/colors.txt'
@@ -144,19 +151,13 @@ class TestRanCat:
         for x in r:
             i.append(x)
         assert i == []
-        assert len(r.files) == 0
+        assert len(r.handlers) == 0
         assert len(i) == r._total_combinations
 
     def test_command_chaining(self):
         datafile = 'examples/data/colors.txt'
         r = RanCat().load(datafile).set_unique(True).set_conversion(str.upper).set_read_size(100)
         assert isinstance(r, RanCat)
-
-    def test_load_structure(self):
-        datafile = 'examples/data/colors.txt'
-        r = RanCat().load_structure(datafile, ['cat', 'dog'])
-        phrase = r.next()
-        assert phrase.endswith('cat') or phrase.endswith('dog')
 
     def test_set_separator(self):
         r = RanCat()
