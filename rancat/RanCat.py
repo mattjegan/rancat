@@ -73,7 +73,9 @@ class RanCat(object):
         return result_string
 
     def load(self, *sources):
-
+        """
+        Initialize Handler instances using sources and add to handlers list
+        """
         for source in sources:
             original_source = source
             source = str(source)
@@ -89,7 +91,7 @@ class RanCat(object):
 
     def soft_reset(self):
         """
-        Resets the combination tracking
+        Reset the combination tracking
         """
         self._total_combinations = 0
         self._seen_map = {}
@@ -97,7 +99,7 @@ class RanCat(object):
 
     def hard_reset(self):
         """
-        Performs a soft reset as well as clears the files structure
+        Perform a soft reset as well as clear the files structure
         """
         self.soft_reset()
         for handler in self.handlers:
@@ -107,7 +109,7 @@ class RanCat(object):
 
     def _refresh_all(self, n):
         """
-        Reads in the next n lines from the files
+        Read in the next n lines from handlers
         """
         self._total_combinations = 0
         for handler in self.handlers:
@@ -127,7 +129,7 @@ class RanCat(object):
 
     def set_conversion(self, conversion_callable):
         """
-        Sets the conversion method for phrases
+        Set the conversion method for phrases
         """
         if hasattr(conversion_callable, '__call__'):
             self._conversion = conversion_callable
