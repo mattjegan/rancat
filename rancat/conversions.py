@@ -16,7 +16,7 @@ Copyright 2016 Matthew Egan
 
 def default_conversion(phrase, sep):
     """
-    Removes new lines, replaces whitespace and 
+    Removes new lines, replaces whitespace and
     hyphens with sep, removes apostrophies.
     """
     return phrase.rstrip().replace(' ', sep).replace(
@@ -31,3 +31,27 @@ def ascii_upper(phrase, sep):
 def camel_case(phrase, sep):
     phrase = default_conversion(phrase, sep).lower()
     return phrase[0].upper() + phrase[1:]
+
+def tech_conversion(text):
+	"""
+	If a global variable (TODO: create global variable) is set to true
+	run final contatination through this function.
+	"""
+
+	#These could be done in a txt file faster probably.
+	hackStarts = ['H','K','C','T','P','J','W','F']
+	hackEnds = ['ACK','AK','AWK','OC','OK','ICK','AX','ECK','IT','OCK','AP','ALK']
+	hacklist = []
+
+	for start in hackStarts:
+		for end in hackEnds:
+			hacklist.append('%s%s' % (start, end)) #generate substrings to be replaced.
+
+	#randomize order or list. Not sure how to do this.
+
+	for sub in hacklist:
+		if(sub in text):
+			text.replace(sub, "hack", 1)
+			return text#just replace hack once.
+
+	return text
