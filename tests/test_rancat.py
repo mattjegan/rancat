@@ -164,6 +164,13 @@ class TestRanCat:
         r.set_separator('-')
         assert r._separator == '-'
 
+    def test_default_input(self):
+        r = RanCat()
+        r.load_default()
+        r.load_default()
+        assert r.next() != ''
+
+
 class TestConversions:
     def test_default_conversion(self):
         phrase = conversions.default_conversion('a B-c\'', '_')
