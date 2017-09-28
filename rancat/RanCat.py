@@ -16,9 +16,11 @@ Copyright 2016 Matthew Egan
 
 from collections import OrderedDict
 import random
+import os
 
 from .conversions import default_conversion
 from .Handler import Handler
+
 
 class RanCat(object):
     def __init__(self, seed=None, unique=False, read_size=1000):
@@ -34,6 +36,8 @@ class RanCat(object):
         self._total_combinations = 0
         self._seen_map = {}
         self._read_size = int(read_size)
+        self._assets_path = os.path.dirname(os.path.realpath(__file__)) \
+                + os.path.sep + "assets" + os.path.sep
 
     def __del__(self):
         for filepath in self.files:
@@ -41,7 +45,7 @@ class RanCat(object):
 
     def __iter__(self):
         return self
-    
+
     def __next__(self):
         return self.next()
 
@@ -58,7 +62,7 @@ class RanCat(object):
         seen = False
         while not seen:
             result_string = ''
-            for file_tuple in self.files.values():    
+            for file_tuple in self.files.values():
                 choice = random.choice(file_tuple.current_lines)
                 result_string += self._conversion(choice, self._separator) + self._separator
             result_string = result_string[:-1]
@@ -141,7 +145,7 @@ class RanCat(object):
     def set_read_size(self, read_size):
         self._read_size = int(read_size)
         return self
-    
+
     def set_separator(self, sep):
         self._separator = str(sep)
         return self
@@ -158,3 +162,9 @@ class RanCat(object):
             self.load(obj)
 
         return self
+
+    def load_default(self):
+        """
+        Loads the lorem ipsum text from assets/lorem_ipsum.txt
+        """
+        self.load(self._assets_path + "lorem_ipsum.txt")
