@@ -15,6 +15,8 @@ Copyright 2016 Matthew Egan
 """
 
 from io import TextIOWrapper
+from urllib.parse import urlparse
+import requests
 
 class Handler(object):
     """
@@ -26,7 +28,15 @@ class Handler(object):
 
         self.raw_obj = obj
 
-        if isinstance(obj, str):
+        if isinstance(obj, str) and urlparse(obj).scheme :
+            self.obj_type = list
+            self.page = requests.get(obj)
+            self.processed_obj = [line.decode('utf8') for line in page]
+            self.current_lines = [line.decode('utf8') for line in page]
+            self.opened = True
+            self.cursor = 0
+
+        elif isinstance(obj, str):
             self.obj_type = TextIOWrapper
             self.processed_obj = open(obj, 'r')
             self.current_lines = []
