@@ -39,6 +39,13 @@ class TestRanCat:
         r.load(datafile)
         assert len(r.files) == 1
 
+    def test_load_url(self):
+        data_url = 'http://www.sample-videos.com/text/Sample-text-file-10kb.txt'
+        seed_value = 123
+        r = RanCat(seed=seed_value)
+        r.load(data_url)
+        assert len(r.files) == 1
+        
     def test_next(self):
         datafile = 'examples/data/colors.txt'
         seed_value = 123
