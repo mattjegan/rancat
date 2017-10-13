@@ -11,7 +11,7 @@ This is the full documentation of [RanCat](https://github.com/mattjegan/rancat),
 
 RanCat is a string generator that can use multiple text sources, including files and native Python lists and tuples. What constitutes a word in a word list is simply an atomic entity in the source, e.g. a line in a file, or a value in a list. RanCat will generate pseudo-random strings that are suitable for use as :
 
-* CVS Branch Names
+* VCS Branch Names
 * Database Names
 * Project/Repository Names
 * Online Avatar Names

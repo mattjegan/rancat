@@ -25,14 +25,26 @@ r = RanCat(read_size=5)
 [Semi-lazily loads](https://thedevmatt.wordpress.com/2016/08/12/semi-lazy-loading-in-rancat/) a data source into RanCat. The data source may be any:
 
 * Filepath (string)
+* Url (string)
 * List
 * Tuple
 
 ```python
 r = RanCat()
 r.load('path/to/file.txt')
+r.load('http://www.sample-videos.com/text/Sample-text-file-10kb.txt')
 r.load(['cat', 'dog'])
 r.load(('cat', 'dog'))
+```
+
+### RanCat.load_default()
+*returns RanCat*
+
+Similar to `Rancat.load` but does not take an argument, simply loads some lorem ipsum text.
+
+```python
+r = RanCat()
+r.load_default()
 ```
 
 ### RanCat.next()

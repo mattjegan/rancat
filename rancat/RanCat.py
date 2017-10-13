@@ -15,8 +15,9 @@ Copyright 2016 Matthew Egan
 """
 
 from collections import OrderedDict
-import random
 import os
+import random
+from time import time
 
 from .conversions import default_conversion
 from .Handler import Handler
@@ -26,7 +27,6 @@ class RanCat(object):
     def __init__(self, seed=None, unique=False, read_size=1000):
         self.files = OrderedDict()
 
-        from time import time
         self.seed = time() if not seed else seed
         random.seed(self.seed)
 
@@ -168,3 +168,5 @@ class RanCat(object):
         Loads the lorem ipsum text from assets/lorem_ipsum.txt
         """
         self.load(self._assets_path + "lorem_ipsum.txt")
+
+        return self
