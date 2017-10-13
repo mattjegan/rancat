@@ -31,8 +31,8 @@ class Handler(object):
         if isinstance(obj, str) and urlparse(obj).scheme :
             self.obj_type = list
             self.page = requests.get(obj)
-            self.processed_obj = [line.decode('utf8') for line in page]
-            self.current_lines = [line.decode('utf8') for line in page]
+            self.processed_obj = [line.decode('utf8') for line in self.page]
+            self.current_lines = [line.decode('utf8') for line in self.page]
             self.opened = True
             self.cursor = 0
 
