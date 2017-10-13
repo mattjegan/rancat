@@ -1,3 +1,7 @@
+# RanCat 1.1.0
+* Implements `Rancat().load_default()` which will use lorem ipsum as default text.
+* Urls can now be passed to `.load`. E.g. `Rancat().load('https://myurl.com')`
+
 # RanCat 1.0.0
 * Added better user documentation
 * Allows custom phrase structure via `RanCat().load_structure(*args)` where args are either filepaths (str) or iterables of strings (tuples, lists)
