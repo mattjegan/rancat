@@ -153,7 +153,7 @@ class RanCat(object):
     def load_structure(self, *args):
         """
         Accepts a number of arguments which may be filepaths
-        or lists/tuples.
+        or urls or lists/tuples.
 
         If the arg was a filepath then it is loaded, otherwise
         the list/tuple is used like a file.

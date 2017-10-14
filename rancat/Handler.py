@@ -21,7 +21,7 @@ import requests
 class Handler(object):
     """
     Provides an interface to interact with
-    files, tuples, and lists as per the requirements
+    files, url , tuples, and lists as per the requirements
     of RanCat.py
     """
     def __init__(self, obj):
